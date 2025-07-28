@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Fingerprinting & Clipboard Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        pre {
+            margin-top: 20px;
+            background: #eee;
+            padding: 15px;
+            display: inline-block;
+            text-align: left;
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Browser Fingerprinting & Clipboard Demo</h1>
+    <button onclick="readClipboard()">Simple Clipboard Read</button>
+    <button onclick="stealClipboard()">Simulated Info Stealer</button>
+    <pre id="output">Clipboard content will appear here...</pre>
+
+    <script>
+    async function readClipboard() {
+        try {
+            const data = await navigator.clipboard.readText();
+            document.getElementById("output").innerText = "Clipboard: " + data;
+        } catch (err) {
+            document.getElementById("output").innerText = "Clipboard read blocked or denied.";
+        }
+    }
+
+    async function stealClipboard() {
+        try {
+            const data = await navigator.clipboard.readText();
+            document.getElementById("output").innerText = "Clipboard: " + data;
+
+            // Simulated exfiltration
+console.log("⚠️ Simulated exfiltration to https://example.com/steal");
+console.log("Payload:", JSON.stringify({ stolenData: data }));
+
+        } catch (err) {
+            document.getElementById("output").innerText = "Clipboard read blocked or denied.";
+        }
+    }
+    </script>
+</body>
+</html>
+
