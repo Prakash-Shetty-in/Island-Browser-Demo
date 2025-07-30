@@ -29,16 +29,18 @@
 </head>
 <body>
   <h1>WebAssembly Execution Attempt</h1>
-  <button onclick="loadWasm()">Try Running WASM</button>
+  <button onclick="runWasm()">Try Running WASM</button>
   <div id="status"></div>
 
   <script>
-    async function loadWasm() {
+    async function runWasm() {
       try {
-        const response = await fetch('https://unpkg.com/simple-wasm-module/hello.wasm');
+        const response = await fetch('https://mdn.github.io/webassembly-examples/js-api/simple.wasm');
         const buffer = await response.arrayBuffer();
         const module = await WebAssembly.compile(buffer);
-        document.getElementById("status").innerText = "✅ WASM Loaded (but should be blocked in Island)";
+        const instance = await WebAssembly.instantiate(module);
+        const result = instance.exports.add(3, 4); // Exported add function
+        document.getElementById("status").innerText = `✅ WASM Loaded: add(3, 4) = ${result}`;
       } catch (e) {
         document.getElementById("status").innerText = "❌ WASM blocked or failed to load";
         console.error(e);
