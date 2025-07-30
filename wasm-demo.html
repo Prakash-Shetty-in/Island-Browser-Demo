@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WebAssembly Block Demo</title>
+  <title>WebAssembly API Control Demo</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       background-color: #0e1a3a;
       color: white;
-      font-family: Arial, sans-serif;
       text-align: center;
       padding: 50px;
     }
@@ -33,24 +32,26 @@
     #output {
       margin-top: 30px;
       font-size: 18px;
+      color: #90ee90;
     }
   </style>
 </head>
 <body>
-  <h1>WebAssembly Demo (Should Be Blocked)</h1>
-  <button onclick="runWasm()">Run WebAssembly Code</button>
+  <h1>WebAssembly API Control Demo</h1>
+  <p>This demo attempts to load and compile a local WebAssembly module.</p>
+  <button onclick="runWasm()">Run WebAssembly</button>
   <div id="output"></div>
 
   <script>
     async function runWasm() {
+      const output = document.getElementById("output");
       try {
-        const response = await fetch("https://unpkg.com/webassembly-test@1.0.1/hello.wasm");
-        const wasmArrayBuffer = await response.arrayBuffer();
-        const wasmModule = await WebAssembly.compile(wasmArrayBuffer);
-        const instance = await WebAssembly.instantiate(wasmModule);
-        document.getElementById("output").innerText = "✅ WebAssembly loaded successfully.";
+        const response = await fetch("hello.wasm");
+        const bytes = await response.arrayBuffer();
+        const module = await WebAssembly.compile(bytes);
+        output.innerText = "✅ WebAssembly module loaded and compiled successfully.";
       } catch (e) {
-        document.getElementById("output").innerText = "❌ WebAssembly failed or blocked: " + e.message;
+        output.innerText = "❌ WebAssembly load/compile failed: " + e.message;
       }
     }
   </script>
