@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Shell Injection Test</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input {
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulate Web Shell Injection</h1>
+  <input id="cmdInput" placeholder="Enter command..." />
+  <div id="log" style="margin-top: 30px;"></div>
+
+  <script>
+    document.getElementById("cmdInput").addEventListener("input", (e) => {
+      const value = e.target.value;
+      const log = document.getElementById("log");
+      log.innerText = `You entered: ${value}`;
+    });
+  </script>
+</body>
+</html>
