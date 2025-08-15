@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fake Login - Keylogger Demo</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input {
+      padding: 10px;
+      font-size: 18px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fake SaaS Login</h1>
+  <input type="text" id="username" placeholder="Username"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+
+  <div id="log" style="margin-top: 30px;"></div>
+
+  <script>
+    document.addEventListener("keydown", (e) => {
+      const char = e.key;
+      const time = new Date().toLocaleTimeString();
+      const log = document.getElementById("log");
+      log.innerHTML += `<div>[${time}] Key Pressed: ${char}</div>`;
+    });
+  </script>
+</body>
+</html>
