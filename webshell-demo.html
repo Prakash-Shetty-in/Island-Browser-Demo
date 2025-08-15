@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Web Shell Injection Test</title>
+  <title>Web Shell POST Injection Demo</title>
   <style>
     body {
       background-color: #1d1f20;
-      color: #fff;
+      color: #ffffff;
       font-family: sans-serif;
       text-align: center;
       padding-top: 80px;
@@ -17,28 +17,23 @@
       font-size: 18px;
       margin: 10px;
     }
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h1>Simulate Web Shell Injection</h1>
-  <input id="cmdInput" placeholder="Enter command..." />
-  <button onclick="sendCommand()">Submit Command</button>
-  <div id="log" style="margin-top: 30px;"></div>
+  <h1>Simulate Web Shell Injection via POST</h1>
 
-  <script>
-    function sendCommand() {
-      const cmd = document.getElementById("cmdInput").value;
-      document.getElementById("log").innerText = `Sending: ${cmd}`;
+  <form action="https://webhook.site/YOUR-UNIQUE-ID" method="POST" target="_blank">
+    <input type="text" name="cmd" placeholder="Enter a command like whoami" required />
+    <br />
+    <button type="submit">Submit Command</button>
+  </form>
 
-      // Simulated POST request with cmd=...
-      fetch("https://example.com/webshell", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: `cmd=${encodeURIComponent(cmd)}`
-      });
-    }
-  </script>
+  <p style="margin-top: 30px; font-size: 14px; color: #aaa;">
+    This form will send the input using HTTP POST with <code>cmd=</code> in the body.
+  </p>
 </body>
 </html>
