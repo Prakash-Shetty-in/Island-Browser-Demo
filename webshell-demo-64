@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,19 +32,14 @@
   <br>
   <button onclick="submitData()">🚀 Submit to Webhook</button>
 
-  <form id="hiddenForm" method="POST" action="https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c" style="display: none;">
-    <input type="hidden" name="payload" id="hiddenField" />
-  </form>
-
   <div id="status"></div>
 
   <script>
     function submitData() {
       const b64 = document.getElementById("base64Input").value;
-      document.getElementById("hiddenField").value = b64;
+      const webhookUrl = "https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c"; // 🔁 Replace with your actual webhook URL
 
-      const form = document.getElementById("hiddenForm");
-      fetch(form.action, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
