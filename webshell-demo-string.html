@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Base64 + Decoded Sender</title>
+</head>
+<body>
+  <h2>Send Base64 and Decoded Strings</h2>
+  <input type="text" id="userInput" placeholder="Enter payload" />
+  <button onclick="sendData()">Send</button>
+
+  <script>
+    async function sendData() {
+      const text = document.getElementById("userInput").value;
+      const encoded = btoa(text);  // base64 encode
+
+      const payload = `decoded=${encodeURIComponent(text)}&base64=${encoded}`;
+
+      await fetch("https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload
+      });
+    }
+  </script>
+</body>
+</html>
