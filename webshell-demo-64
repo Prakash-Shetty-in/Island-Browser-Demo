@@ -1,56 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>EDM DLP Test – Base64 Submit</title>
+  <meta charset="UTF-8">
+  <title>EDM DLP Base64 Submit</title>
   <style>
     body {
       background-color: #121212;
-      color: #ffffff;
-      font-family: sans-serif;
+      color: white;
+      font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 50px;
+      padding-top: 80px;
     }
     input, button {
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 20px;
       width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      margin: 10px;
     }
     #status {
-      margin-top: 30px;
-      font-size: 16px;
-      color: #00ff00;
+      margin-top: 20px;
+      color: #00FF00;
     }
   </style>
 </head>
 <body>
-  <h1>EDM Base64 Submit Demo</h1>
+  <h1>EDM DLP Base64 Submit</h1>
 
-  <input type="text" id="base64Input" placeholder="Paste Base64 string here..." />
-  <br>
-  <button onclick="submitData()">🚀 Submit to Webhook</button>
-
+  <input type="text" id="b64Input" placeholder="Paste base64 string here..." />
+  <br />
+  <button onclick="sendToWebhook()">Submit</button>
   <div id="status"></div>
 
   <script>
-    function submitData() {
-      const b64 = document.getElementById("base64Input").value;
-      const webhookUrl = "https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c"; // 🔁 Replace with your actual webhook URL
+    function sendToWebhook() {
+      const base64 = document.getElementById("b64Input").value;
+      const webhookUrl = "https://webhook.site/YOUR-ID"; // 🔁 Replace with your actual webhook URL
 
       fetch(webhookUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "payload=" + encodeURIComponent(b64)
+        body: "data=" + encodeURIComponent(base64)
       })
-      .then(() => {
-        document.getElementById("status").innerText = "✅ Submitted: " + b64;
+      .then(response => {
+        document.getElementById("status").innerText = "✅ Submitted: " + base64;
       })
-      .catch(err => {
-        document.getElementById("status").innerText = "❌ Error: " + err;
+      .catch(error => {
+        document.getElementById("status").innerText = "❌ Error: " + error;
       });
     }
   </script>
