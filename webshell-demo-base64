@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Base64 Decode and Submit</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      color: #ffffff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input, button {
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      margin: 10px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Send Decoded Base64 Payload</h1>
+
+  <form id="decodedForm" action="https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c" method="POST" target="_blank">
+    <!-- 🔁 Replace the webhook URL above with your own if needed -->
+    <input type="hidden" name="decodedData" id="decodedData">
+    <button type="submit" onclick="decodeAndSend()">Submit Decoded Payload</button>
+  </form>
+
+  <script>
+    function decodeAndSend() {
+      const base64String = "Y2F0IC9ldGMvcGFzc3dk"; // 👈 This is "cat /etc/passwd" base64-encoded
+      const decoded = atob(base64String); // decode base64
+      document.getElementById("decodedData").value = decoded;
+    }
+  </script>
+</body>
+</html>
