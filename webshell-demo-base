@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Base64 WebShell Demo</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      color: #ffffff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input, button {
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      margin: 10px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Submit Base64 Payload via POST</h1>
+
+  <form action="https://webhook.site/YOUR-UNIQUE-ID" method="POST" target="_blank">
+    <input type="text" name="cmd" placeholder="Paste base64 string here (e.g. Y2F0IC9ldGMvcGFzc3dk)" required />
+    <br />
+    <button type="submit">Submit to Webhook</button>
+  </form>
+
+  <p style="margin-top: 30px; font-size: 14px; color: #aaa;">
+    Form sends <code>cmd=base64_value</code> via HTTP POST
+  </p>
+</body>
+</html>
