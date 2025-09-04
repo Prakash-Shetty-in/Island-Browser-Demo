@@ -1,28 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Base64 + Decoded Sender</title>
+  <meta charset="UTF-8" />
+  <title>Base64 DLP Demo</title>
+  <style>
+    body {
+      background-color: #1d1f20;
+      color: #ffffff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    input, button {
+      width: 60%;
+      padding: 12px;
+      font-size: 18px;
+      margin: 10px;
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .note {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Send Base64 and Decoded Strings</h2>
-  <input type="text" id="userInput" placeholder="Enter payload" />
-  <button onclick="sendData()">Send</button>
+  <h1>Simulate DLP Base64 Trigger</h1>
+
+  <input type="text" id="userInput" placeholder="Type 'cat /etc/passwd'" required />
+  <br />
+  <button onclick="submitData()">🚨 Submit</button>
+
+  <p class="note">This demo sends both decoded and base64 strings via POST.</p>
 
   <script>
-    async function sendData() {
-      const text = document.getElementById("userInput").value;
-      const encoded = btoa(text);  // base64 encode
+    async function submitData() {
+      const input = document.getElementById("userInput").value.trim();
+      if (!input) return alert("Please enter a string");
 
-      const payload = `decoded=${encodeURIComponent(text)}&base64=${encoded}`;
+      const base64 = btoa(input);
+      const payload = `decoded=${encodeURIComponent(input)}&base64=${base64}`;
 
-      await fetch("https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: payload
-      });
+      try {
+        const response = await fetch("https://webhook.site/12c74b14-80e6-4bce-9678-184713c0058c", { // 🔁 Replace this line with your actual Webhook URL
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: payload
+        });
+
+        if (response.ok) {
+          alert("✅ POST sent successfully!");
+        } else {
+          alert("❌ Failed to send POST.");
+        }
+      } catch (e) {
+        alert("❌ Error: " + e);
+      }
     }
   </script>
 </body>
